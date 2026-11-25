@@ -1,0 +1,152 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #f8fbfe;
+  --card: #ffffff;
+  --surface-subtle: #f1f6fb;
+  --ink: #1e293b;
+  --mute: #57657a;
+  --accent: #e8602c;
+  --accent-hover: #d4511f;
+  --accent-soft: rgba(232, 96, 44, 0.1);
+  --line: #dde6f0;
+  --sea: #d7effb;
+  --sea-wave: #4ea5d1;
+  --pipe: #cfd8e3;
+  --pipe-inner: #f1f5f9;
+  --sky-top: #e3f2fd;
+  --sky-bot: #f9fcff;
+  --ground: #e3efd2;
+  --ground-dark: #cfe0bd;
+  --subsoil: #efe8dd;
+  --subsoil-deep: #e3d9c8;
+  --grid-line: #4f5d73;
+}
+
+html,
+body {
+  margin: 0;
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+.font-display {
+  font-family: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+/* Animated dashed thermal flow lines */
+.massileo-pipe-outer {
+  fill: none;
+  stroke: var(--pipe);
+  stroke-width: 11;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.massileo-pipe-inner {
+  fill: none;
+  stroke: var(--pipe-inner);
+  stroke-width: 5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.massileo-flow {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 3.5;
+  stroke-linecap: round;
+  stroke-dasharray: 7 9;
+  animation: massileo-dash 0.95s linear infinite;
+  transition: opacity 0.25s ease;
+}
+
+.massileo-flow-reverse {
+  animation-direction: reverse;
+}
+
+@keyframes massileo-dash {
+  to {
+    stroke-dashoffset: -16;
+  }
+}
+
+.massileo-wave {
+  animation: massileo-wave-drift 4.5s ease-in-out infinite alternate;
+}
+
+@keyframes massileo-wave-drift {
+  0% {
+    transform: translateX(-4px);
+  }
+  100% {
+    transform: translateX(4px);
+  }
+}
+
+.turbine-rotor {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: turbine-spin 5s linear infinite;
+}
+
+@keyframes turbine-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.steam-plume {
+  animation: steam-rise 3.2s ease-in-out infinite;
+}
+
+@keyframes steam-rise {
+  0% {
+    transform: translateY(2px);
+    opacity: 0.45;
+  }
+  50% {
+    transform: translateY(-5px);
+    opacity: 0.85;
+  }
+  100% {
+    transform: translateY(2px);
+    opacity: 0.45;
+  }
+}
+
+.pac-pulse-ring {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: pac-pulse 2.2s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+
+.pac-pulse-ring-delay {
+  animation-delay: 1.1s;
+}
+
+@keyframes pac-pulse {
+  0% {
+    transform: scale(0.96);
+    opacity: 0.65;
+  }
+  100% {
+    transform: scale(1.38);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .massileo-flow,
+  .massileo-wave,
+  .turbine-rotor,
+  .steam-plume,
+  .pac-pulse-ring {
+    animation: none;
+  }
+}
