@@ -1,0 +1,33 @@
+
+name: Synchronisation automatique vers la Forge
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  sync:
+    name: Envoyer le code vers la Forge
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Récupérer le projet GitHub
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Synchroniser avec la Forge
+        env:
+          FORGE_USERNAME: ${{ secrets.FORGE_USERNAME }}
+          FORGE_TOKEN: ${{ secrets.FORGE_TOKEN }}
+        run: |
+          AUTH=$(printf '%s' "$FORGE_USERNAME:$FORGE_TOKEN" | base64 -w0)
+
+          git -c http.extraheader="AUTHORIZATION: basic $AUTH" \
+            push https://forge.apps.education.fr/marchettibenjamin/massileo.git \
+            HEAD:refs/heads/main
